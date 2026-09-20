@@ -15,3 +15,4 @@ Requires secrets:
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 - `ANTHROPIC_API_KEY`
+# Demo app deployment triggered
