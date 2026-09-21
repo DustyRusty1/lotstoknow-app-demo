@@ -16,3 +16,4 @@ Requires secrets:
 - `CLOUDFLARE_ACCOUNT_ID`
 - `ANTHROPIC_API_KEY`
 # Demo app deployment triggered
+# Deployment with updated Cloudflare token
