@@ -106,7 +106,7 @@ export default {
     const path = url.pathname;
 
     if (path === '/')                 return new Response(FRONTEND_HTML, { status: 200, headers: { ...CORS, 'Content-Type': 'text/html; charset=utf-8' } });
-    if (path === '/auth/check')       return checkDemoAccess(request, env);
+    if (path === '/auth/check')       return checkDemoAccessEndpoint(request, env);
     if (path === '/items/save')       return saveItem(request, env);
     if (path === '/images/upload')    return uploadItemImage(request, env);
     if (path === '/gallery/consignments') return getGalleryConsignments(request, env);
@@ -710,7 +710,7 @@ async function getConsignments(request, env) {
   }
 }
 
-async function checkDemoAccess(request, env) {
+async function checkDemoAccessEndpoint(request, env) {
   try {
     const { code } = await request.json();
     if (!code) {
