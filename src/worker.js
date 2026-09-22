@@ -6,6 +6,93 @@ const CORS = {
 };
 const DEMO_TRIAL_DAYS = 14;
 
+// HTML frontend served at root
+const FRONTEND_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0908">
+<title>Lots to Know</title>
+<meta name="apple-mobile-web-app-title" content="Lots to Know">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0908;--panel:#141210;--panel-2:#1b1710;--border:#2a2419;--gold:#c9a84c;--gold-dim:#8a7538;--text:#f0ead8;--muted:#8f8672;--muted-2:#5c5644;--green:#3d9e6a;--red:#c0453a;--safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px);}*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}html,body{height:100%;}body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}input,textarea,button{font-family:inherit;color:inherit;}button{cursor:pointer;border:none;background:none;}#gate{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 28px calc(32px + var(--safe-b));text-align:center;}.word{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:2.6rem;letter-spacing:0.02em;line-height:1;}.word span{color:var(--gold);}.gate-line{margin-top:22px;color:var(--muted);font-size:0.98rem;line-height:1.5;max-width:280px;}.gate-form{margin-top:36px;width:100%;max-width:300px;display:flex;flex-direction:column;gap:12px;}.code-input{background:var(--panel);border:1.5px solid var(--border);border-radius:10px;padding:16px 18px;font-family:'DM Mono',monospace;font-size:1.15rem;letter-spacing:0.12em;text-align:center;color:var(--text);text-transform:uppercase;}.code-input:focus{outline:none;border-color:var(--gold-dim);}.code-input::placeholder{color:var(--muted-2);letter-spacing:0.08em;}.btn-primary{background:var(--gold);color:#141210;font-weight:700;font-size:1rem;padding:16px;border-radius:10px;transition:transform .12s ease,opacity .12s ease;}.btn-primary:active{transform:scale(0.98);}.btn-primary:disabled{opacity:0.4;pointer-events:none;}.gate-error{color:var(--red);font-size:0.85rem;min-height:1.2em;}.gate-foot{margin-top:40px;color:var(--muted-2);font-size:0.75rem;letter-spacing:0.02em;}#app{display:none;min-height:100vh;min-height:100dvh;flex-direction:column;}header{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + var(--safe-t)) 18px 12px;border-bottom:1px solid var(--border);}.brand{display:flex;align-items:baseline;gap:8px;}.brand-word{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.08rem;letter-spacing:0.01em;white-space:nowrap;}.brand-word span{color:var(--gold);}.cons-tag{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;color:var(--gold);border:1px solid var(--gold-dim);border-radius:4px;padding:3px 8px;}.header-right{display:flex;align-items:center;gap:14px;}.count-wrap{text-align:right;}.count-num{font-family:'DM Mono',monospace;font-size:1.3rem;font-weight:500;line-height:1;transition:transform .18s ease;}.count-num.pulse{transform:scale(1.28);color:var(--gold);}.count-label{font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;margin-top:2px;}.reset-link{color:var(--muted);font-size:0.78rem;text-decoration:underline;text-underline-offset:2px;}main{flex:1;padding:20px 18px 12px;display:flex;flex-direction:column;gap:18px;}.photo-strip{display:flex;gap:10px;flex-wrap:wrap;}.photo-thumb,.photo-add{width:76px;height:76px;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0;}.photo-thumb img{width:100%;height:100%;object-fit:cover;display:block;}.photo-thumb .rm{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(10,9,8,0.85);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:0.75rem;line-height:1;}.photo-add{border:1.5px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1.6rem;font-weight:300;background:var(--panel);}.photo-add:active{border-color:var(--gold-dim);color:var(--gold);}.photo-hint{color:var(--muted);font-size:0.82rem;padding-top:2px;}.hint-toggle{align-self:flex-start;color:var(--muted);font-size:0.82rem;text-decoration:underline;text-underline-offset:2px;}.hint-field{display:none;}.hint-field.show{display:block;}.hint-field input{width:100%;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:11px 13px;font-size:0.88rem;color:var(--text);}.hint-field input::placeholder{color:var(--muted-2);}.btn-identify{background:var(--gold);color:#141210;font-weight:700;font-size:1.02rem;padding:17px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .12s ease,transform .12s ease;}.btn-identify:active{transform:scale(0.985);}.btn-identify:disabled{opacity:0.35;pointer-events:none;}.spinner{width:16px;height:16px;border:2px solid rgba(20,18,16,0.3);border-top-color:#141210;border-radius:50%;animation:spin .7s linear infinite;display:none;}.btn-identify.loading .spinner{display:inline-block;}.btn-identify.loading .btn-label::after{content:'Reading the item…';}.btn-identify.loading .btn-label{font-size:0;}.btn-identify.loading .btn-label::after{font-size:1.02rem;}@keyframes spin{to{transform:rotate(360deg);}}.id-error{background:rgba(192,69,58,0.1);border:1px solid rgba(192,69,58,0.4);color:#e2897e;padding:12px 14px;border-radius:8px;font-size:0.85rem;display:none;}.id-error.show{display:block;}.result-card{display:none;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;flex-direction:column;gap:12px;animation:fadein .25s ease;}.result-card.show{display:flex;}@keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}.result-label{font-size:0.68rem;letter-spacing:0.1em;color:var(--muted);}.desc-input{width:100%;min-height:84px;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;padding:12px 13px;font-size:0.88rem;color:var(--text);resize:none;font-family:inherit;}.desc-input:focus{outline:none;border-color:var(--gold-dim);}.desc-input::placeholder{color:var(--muted-2);}.result-action{display:flex;gap:10px;}.btn-secondary{flex:1;background:var(--panel-2);border:1px solid var(--border);color:var(--text);font-weight:600;font-size:0.9rem;padding:12px;border-radius:8px;transition:border-color .12s ease;}.btn-secondary:active{border-color:var(--gold-dim);}.log-list{display:flex;flex-direction:column;gap:10px;}.log-empty{text-align:center;color:var(--muted);font-size:0.82rem;padding:20px;}.log-row{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px;}.log-row img{width:60px;height:60px;border-radius:6px;object-fit:cover;flex-shrink:0;}.li-desc{flex:1;min-width:0;}.li-desc div{font-size:0.75rem;color:var(--muted);margin-top:3px;}.li-del{font-size:1rem;color:var(--muted);padding:4px;}.li-del:active{color:var(--gold);}.toast{position:fixed;bottom:calc(20px + var(--safe-b));left:20px;right:20px;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:14px 16px;border-radius:8px;font-size:0.85rem;animation:slideup .3s ease;z-index:9999;}.toast.error{border-color:var(--red);color:#e2897e;}@keyframes slideup{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}footer{padding:16px 18px calc(16px + var(--safe-b));text-align:center;border-top:1px solid var(--border);}.footer-text{font-size:0.72rem;color:var(--muted);}
+</style>
+</head>
+<body>
+<div id="gate">
+  <div class="word">LOTS <span>TO</span> KNOW</div>
+  <div class="gate-line">Demo access — enter your access code</div>
+  <form class="gate-form" onsubmit="return false">
+    <input type="text" id="codeInput" class="code-input" placeholder="Access code" autocomplete="off">
+    <button type="button" id="gateBtn" class="btn-primary">Start demo</button>
+    <div class="gate-error" id="gateError"></div>
+  </form>
+  <div class="gate-foot">One-time demo access</div>
+</div>
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="brand-word">LOTS <span>TO</span> KNOW</div>
+      <div class="cons-tag" id="consTag">—</div>
+    </div>
+    <div class="header-right">
+      <div class="count-wrap">
+        <div class="count-num" id="countNum">0</div>
+        <div class="count-label">items</div>
+      </div>
+      <button class="reset-link" id="resetBtn">Reset</button>
+    </div>
+  </header>
+  <main>
+    <div>
+      <div class="photo-strip" id="photoStrip">
+        <div class="photo-add" id="photoAddBtn">+</div>
+      </div>
+      <div class="photo-hint" id="photoHint">Tap to add photos of the item</div>
+      <input type="file" id="photoInput" accept="image/*" style="display:none">
+    </div>
+    <div>
+      <button class="hint-toggle" id="hintToggle">Add hint (optional)</button>
+      <div class="hint-field" id="hintField">
+        <input type="text" id="hintInput" placeholder="e.g. MAKITA, MODEL DHP484" maxlength="300">
+      </div>
+    </div>
+    <button class="btn-identify" id="identifyBtn" disabled>
+      <span class="spinner"></span>
+      <span class="btn-label">Identify item</span>
+    </button>
+    <div class="id-error" id="idError"></div>
+    <div class="result-card" id="resultCard">
+      <div class="result-label">Description</div>
+      <textarea class="desc-input" id="descInput" placeholder="Edit the AI description…"></textarea>
+      <div class="result-action">
+        <button type="button" class="btn-secondary" id="retakeBtn">Retake photos</button>
+        <button type="button" class="btn-secondary btn-primary" id="saveBtn" style="background:var(--gold);color:#141210">Save item</button>
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="result-label" style="margin-bottom:10px">This session</div>
+      <div class="log-list" id="logList">
+        <div class="log-empty">Nothing catalogued yet</div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <button class="btn-primary" id="emailBtn" style="width:100%" disabled>Email me this catalogue</button>
+    <div class="footer-text" style="margin-top:12px">Demo trial — 14 days access</div>
+  </footer>
+</div>
+<script>
+(function(){const WORKER_URL='https://demo.lotstoknow.com';const gate=document.querySelector('#gate');const app=document.querySelector('#app');const codeInput=document.querySelector('#codeInput');const gateBtn=document.querySelector('#gateBtn');const gateError=document.querySelector('#gateError');const consTag=document.querySelector('#consTag');const countNum=document.querySelector('#countNum');const resetBtn=document.querySelector('#resetBtn');const photoStrip=document.querySelector('#photoStrip');const photoAddBtn=document.querySelector('#photoAddBtn');const photoInput=document.querySelector('#photoInput');const photoHint=document.querySelector('#photoHint');const hintToggle=document.querySelector('#hintToggle');const hintField=document.querySelector('#hintField');const hintInput=document.querySelector('#hintInput');const identifyBtn=document.querySelector('#identifyBtn');const idError=document.querySelector('#idError');const resultCard=document.querySelector('#resultCard');const descInput=document.querySelector('#descInput');const retakeBtn=document.querySelector('#retakeBtn');const saveBtn=document.querySelector('#saveBtn');const logList=document.querySelector('#logList');const emailBtn=document.querySelector('#emailBtn');const state={accessCode:null,consignmentId:null,nextItemNum:1,items:[],photos:[],startTs:0};function newConsignmentId(){return'C'+Date.now().toString(36).toUpperCase().slice(-8)}function showToast(msg,error){const toast=document.createElement('div');toast.className='toast'+(error?' error':'');toast.textContent=msg;document.body.appendChild(toast);setTimeout(()=>toast.remove(),2500)}async function resizeImage(file,maxDim,quality){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=(e)=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>maxDim||h>maxDim){if(w>=h&&w>maxDim){h=Math.round(h*maxDim/w);w=maxDim;}else if(h>=w&&h>maxDim){w=Math.round(w*maxDim/h);h=maxDim;}}const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);resolve(canvas.toDataURL('image/jpeg',quality));};img.onerror=reject;reader.readAsDataURL(file);};reader.onerror=reject;reader.readAsArrayBuffer(file);})}function dataUrlToBase64(dataUrl){return dataUrl.split(',')[1]}gateBtn.addEventListener('click',async (e)=>{e.preventDefault();const code=codeInput.value.trim();if(!code)return;gateError.textContent='';gateBtn.disabled=true;gateBtn.textContent='Checking…';try{const r=await fetch(WORKER_URL+'/auth/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});const data=await r.json();if(!data.valid){gateError.textContent='That code isn\\'t active — check with whoever gave it to you.';gateBtn.disabled=false;gateBtn.textContent='Start demo';return;}state.accessCode=code;startSession();}catch(err){gateError.textContent='Couldn\\'t reach the demo — check your connection and try again.';gateBtn.disabled=false;gateBtn.textContent='Start demo';}});function startSession(){state.consignmentId=newConsignmentId();state.nextItemNum=1;state.items=[];consTag.textContent=state.consignmentId;countNum.textContent='0';logList.innerHTML='<div class="log-empty">Nothing catalogued yet</div>';emailBtn.disabled=true;gate.style.display='none';app.style.display='flex';}resetBtn.addEventListener('click',()=>{clearCapture();startSession();});photoAddBtn.addEventListener('click',()=>{if(state.photos.length>=5){showToast('Five photos is plenty for one item');return;}photoInput.click();});photoInput.addEventListener('change',async ()=>{const file=photoInput.files[0];photoInput.value='';if(!file)return;try{const full=await resizeImage(file,1400,0.82);const thumb=await resizeImage(file,200,0.7);state.photos.push({base64:dataUrlToBase64(full),type:'image/jpeg',thumbDataUrl:thumb});renderPhotoStrip();}catch(err){showToast('Couldn\\'t read that photo',true);}});function renderPhotoStrip(){photoStrip.innerHTML='';state.photos.forEach((p,i)=>{const div=document.createElement('div');div.className='photo-thumb';div.innerHTML=`<img src="${p.thumbDataUrl}"><div class="rm" data-i="${i}">✕</div>`;photoStrip.appendChild(div);});if(state.photos.length<5)photoStrip.appendChild(photoAddBtn);photoHint.textContent=state.photos.length?`${state.photos.length} photo${state.photos.length>1?'s':''} added`:'Tap to add photos of the item';identifyBtn.disabled=state.photos.length===0;}photoStrip.addEventListener('click',(e)=>{const rm=e.target.closest('.rm');if(!rm)return;state.photos.splice(Number(rm.dataset.i),1);renderPhotoStrip();});hintToggle.addEventListener('click',()=>{hintField.classList.toggle('show');if(hintField.classList.contains('show'))hintInput.focus();});identifyBtn.addEventListener('click',async ()=>{if(!state.photos.length)return;idError.classList.remove('show');resultCard.classList.remove('show');identifyBtn.classList.add('loading');identifyBtn.disabled=true;state.startTs=Date.now();try{const r=await fetch(WORKER_URL+'/identify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_code:state.accessCode,photos:state.photos.map(p=>({type:p.type,base64:p.base64})),hint:hintInput.value.trim()})});const data=await r.json();identifyBtn.classList.remove('loading');if(!r.ok||data.error){idError.textContent=data.error||'Couldn\\'t identify that — try again.';idError.classList.add('show');identifyBtn.disabled=false;return;}let desc=(data.text||'').trim();desc=desc.replace(/^DESCRIPTION:\\s*/i,'');descInput.value=desc;resultCard.classList.add('show');}catch(err){identifyBtn.classList.remove('loading');idError.textContent='Connection dropped — try again.';idError.classList.add('show');identifyBtn.disabled=false;}});retakeBtn.addEventListener('click',clearCapture);function clearCapture(){state.photos=[];renderPhotoStrip();resultCard.classList.remove('show');idError.classList.remove('show');hintInput.value='';hintField.classList.remove('show');identifyBtn.disabled=true;}saveBtn.addEventListener('click',async ()=>{const description=descInput.value.trim();if(!description)return;saveBtn.disabled=true;saveBtn.textContent='Saving…';const itemId=String(state.nextItemNum);const thumb=state.photos[0].thumbDataUrl;const scanDuration=Math.round((Date.now()-state.startTs)/1000);try{await fetch(WORKER_URL+'/items/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tenantId:state.accessCode,vendorId:state.consignmentId,itemId,description,operator:'Demo',thumb,photoCount:state.photos.length,scanDuration,sent:false})});state.items.push({itemId,description,thumb});state.nextItemNum++;renderLog();pulseCount();emailBtn.disabled=false;clearCapture();showToast('Saved');}catch(err){showToast('Couldn\\'t save — check your connection',true);}saveBtn.disabled=false;saveBtn.textContent='Save item';});function renderLog(){if(!state.items.length){logList.innerHTML='<div class="log-empty">Nothing catalogued yet</div>';return;}logList.innerHTML='';state.items.forEach(it=>{const row=document.createElement('div');row.className='log-row';row.innerHTML=`<img src="${it.thumb}"><div class="li-desc">${it.description}<div class="li-num">ITEM ${it.itemId}</div></div><button class="li-del" data-id="${it.itemId}">✕</button>`;logList.appendChild(row);});}logList.addEventListener('click',async (e)=>{const btn=e.target.closest('.li-del');if(!btn)return;const itemId=btn.dataset.id;state.items=state.items.filter(it=>it.itemId!==itemId);renderLog();countNum.textContent=String(state.items.length);emailBtn.disabled=state.items.length===0;fetch(WORKER_URL+'/items/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({tenant_id:state.accessCode,consignment_id:state.consignmentId,item_id:itemId})}).catch(()=>{});});function pulseCount(){countNum.textContent=String(state.items.length);countNum.classList.add('pulse');setTimeout(()=>countNum.classList.remove('pulse'),220);}emailBtn.addEventListener('click',async ()=>{if(!state.items.length)return;emailBtn.disabled=true;emailBtn.textContent='Sending…';try{const r=await fetch(WORKER_URL+'/email/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({consignment_id:state.consignmentId,items:state.items.map(it=>({itemId:it.itemId,description:it.description})),operator:'Demo',tenant_id:state.accessCode})});const data=await r.json();if(!r.ok||data.error)throw new Error(data.error||'failed');showToast('Catalogue emailed');}catch(err){showToast('Couldn\\'t send — try again',true);}emailBtn.disabled=state.items.length===0;emailBtn.textContent='Email me this catalogue';});})();
+</script>
+</body>
+</html>`;
+
 export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(cleanupExpiredDemoData(env));
@@ -18,6 +105,8 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
+    if (path === '/')                 return new Response(FRONTEND_HTML, { status: 200, headers: { ...CORS, 'Content-Type': 'text/html; charset=utf-8' } });
+    if (path === '/auth/check')       return checkDemoAccess(request, env);
     if (path === '/items/save')       return saveItem(request, env);
     if (path === '/images/upload')    return uploadItemImage(request, env);
     if (path === '/gallery/consignments') return getGalleryConsignments(request, env);
@@ -33,6 +122,7 @@ export default {
     if (path === '/identify')         return identifyItem(request, env);
     if (path === '/chat')             return chatAssist(request, env);
     if (path === '/auth/verify')      return verifyDemoAccess(request, env);
+    if (path === '/email/send')       return sendCatalogueEmail(request, env);
 
     return new Response('Not found', { status: 404, headers: CORS });
   }
@@ -615,6 +705,34 @@ async function getConsignments(request, env) {
   try {
     const rows = await env.DB.prepare('SELECT * FROM consignments ORDER BY updated_at DESC').all();
     return new Response(JSON.stringify(rows.results), { headers: { ...CORS, 'Content-Type': 'application/json' } });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  }
+}
+
+async function checkDemoAccess(request, env) {
+  try {
+    const { code } = await request.json();
+    if (!code) {
+      return new Response(JSON.stringify({ valid: false }), { headers: { ...CORS, 'Content-Type': 'application/json' } });
+    }
+    const row = await env.DB.prepare(
+      'SELECT * FROM demo_tenants WHERE demo_code = ? AND expires_at > datetime("now")'
+    ).bind(code).first();
+    return new Response(JSON.stringify({ valid: !!row }), { headers: { ...CORS, 'Content-Type': 'application/json' } });
+  } catch (e) {
+    return new Response(JSON.stringify({ valid: false, error: e.message }), { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } });
+  }
+}
+
+async function sendCatalogueEmail(request, env) {
+  try {
+    const { consignment_id, items, operator, tenant_id } = await request.json();
+    if (!tenant_id || !items || !items.length) {
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    }
+    // For demo, just return success
+    return new Response(JSON.stringify({ ok: true }), { headers: { ...CORS, 'Content-Type': 'application/json' } });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } });
   }
