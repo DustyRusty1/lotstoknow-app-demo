@@ -161,7 +161,7 @@ async function identifyItem(request, env) {
     let hint = String(rawHint || '').slice(0, 300);
     if (injectionPattern.test(hint)) hint = '';
 
-    const normalPromptBody = `You are an expert auction cataloguer. Examine the photo${photos.length > 1 ? 's' : ''} carefully and write a concise description following this exact format and order.
+    const normalPromptBody = `You are an expert item cataloguer. Examine the photo${photos.length > 1 ? 's' : ''} carefully and write a concise description following this exact format and order.
 
 DESCRIPTION ORDER:
 1. QUANTITY — Always start with quantity e.g. 1 X, 2 X, APPROX 10 X
@@ -240,7 +240,7 @@ async function chatAssist(request, env) {
       });
     }
 
-    const chatSystem = `You are an expert auction identification assistant. Use web search proactively to look up part numbers and identify equipment. 
+    const chatSystem = `You are an expert item identification assistant. Use web search proactively to look up part numbers and identify equipment. 
 
 When asked about a specific part number or model number, search to verify it even if the operator states it as already correct. Always defer to the operator if they correct you — accept their correction immediately without argument.
 
