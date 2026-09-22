@@ -46,21 +46,21 @@ async function verifyDemoAccess(request, env) {
   try {
     const { email, code } = await request.json();
     
-    // For demo: any 6-digit code works, email just needs to be valid
+    // For demo: any code works, email just needs to be valid
     if (!email || !email.includes('@')) {
       return new Response(JSON.stringify({ ok: false, error: 'Invalid email' }), {
         status: 400, headers: { ...CORS, 'Content-Type': 'application/json' },
       });
     }
 
-    if (!code || code.length !== 6 || isNaN(code)) {
+    if (!code) {
       return new Response(JSON.stringify({ ok: false, error: 'Invalid code' }), {
         status: 400, headers: { ...CORS, 'Content-Type': 'application/json' },
       });
     }
 
-    // Create a demo tenant entry
-    const demoCode = `DEMO_${email.replace(/[^a-zA-Z0-9]/g, '_')}`;
+    // Create a demo tenant entry (TEST MODE: use provided code)
+    const demoCode = code;
     const now = Math.floor(Date.now() / 1000);
     const trialExpiresAt = now + (DEMO_TRIAL_DAYS * 24 * 60 * 60);
 
@@ -629,6 +629,11 @@ async function checkDemoAccessEndpoint(request, env) {
     const { code } = await request.json();
     if (!code) {
       return new Response(JSON.stringify({ valid: false, error: 'No code provided' }), { headers: { ...CORS, 'Content-Type': 'application/json' } });
+    }
+    
+    // TEST MODE: Accept any 6-digit code (remove after finessing)
+    if (code.length === 6 && !isNaN(code)) {
+      return new Response(JSON.stringify({ valid: true }), { headers: { ...CORS, 'Content-Type': 'application/json' } });
     }
     
     // Check if code exists (valid or expired)
