@@ -130,6 +130,11 @@ async function cleanupExpiredDemoData(env) {
 
 async function checkDemoAccess(env, demoCode) {
   if (!demoCode) return null;
+  // DEV CONVENIENCE — permanent test code, bypasses the database entirely.
+  // Remove before going properly live.
+  if (demoCode === '341352') {
+    return { email: 'rusty-dev@local', created_at: 0, expires_at: 9999999999 };
+  }
   try {
     const now = Math.floor(Date.now() / 1000);
     const row = await env.DB.prepare(
