@@ -19,7 +19,7 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    if (path === '/')                 return new Response(FRONTEND_HTML, { status: 200, headers: { ...CORS, 'Content-Type': 'text/html; charset=utf-8' } });
+    if (path === '/')                 return new Response(FRONTEND_HTML, { status: 200, headers: { ...CORS, 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store, no-cache, must-revalidate' } });
     if (path === '/auth/check')       return checkDemoAccessEndpoint(request, env);
     if (path === '/items/save')       return saveItem(request, env);
     if (path === '/images/upload')    return uploadItemImage(request, env);
